@@ -3,6 +3,7 @@ import Logo from './Logo'
 import { MdSearch } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
 import Navigations from './pcNav';
+import { NavLink } from 'react-router-dom';
 
 const Nav = () => {
   const [search , setSearch] = useState(false)
@@ -18,7 +19,7 @@ const Nav = () => {
 
     { search ? (<div className=' md:flex gap-1 '>
       <MdSearch className=' text-5xl bg-purple-100 rounded-full p-2 text-purple-800 cursor-pointer' title='search' onClick={()=>setSearch(false)}/>
-      <input type='text' className=' md:hidden border-2 border-black py-2 text-lg rounded-full  pl-3 place-self-start md:mt-2 mt-4 absolute left-0 w-10/12 mx-auto right-10 ' placeholder='Search'/>
+      <input type='text' className=' md:hidden border-2 border-black py-2 text-lg rounded-full  pl-3 place-self-start md:mt-2 mt-4 absolute left-0 w-10/12 mx-auto right-10 animate-bounce' placeholder='Search'/>
    </div> )
       : 
       (<>
@@ -28,8 +29,9 @@ const Nav = () => {
     </>  )
 
     }
-
+   <NavLink to={'/msg'} >
      <span className='flex '> <FiMessageSquare className='text-purple-800 p-2 text-5xl rounded-full  bg-purple-100 cursor-pointer' title='messages'/><p className='font-semibold text-red-900 text-sm'>0</p></span> 
+   </NavLink>
     </div>
     </div>
     </div>

@@ -2,5 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.mobile a.active {
+   transform: scale(1.5);
+  color: blueviolet;
+}
+.navs a.active {
+   transform: scale(1.5);
+  color: blueviolet;
+}
 
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Notify = () => {
+const Message = () => {
   return (
     <div>
-      notify
+      message
     </div>
   )
 }
 
-export default Notify
+export default Message

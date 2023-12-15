@@ -8,10 +8,10 @@ const MblNav = () => {
     <div>
        <div className="container fixed sm:mx-9 bg-white bottom-0 ">      
          <div className="mobile  flex  text-purple-900 py-3 border-t-2 text-3xl justify-around md:hidden ">
-    <NavLink>  <FaHome className='cursor-pointer'/> </NavLink> 
-      <FaUserFriends className='cursor-pointer' title='Friends'/>
-      <MdNotifications className='cursor-pointer' title='Notifications'/>
-      <MdAccountCircle className='cursor-pointer' title='Profile'/>
+    <NavLink to='/' >  <FaHome className='cursor-pointer'/> </NavLink> 
+    <NavLink to='/friends' >  <FaUserFriends className='cursor-pointer' title='Friends'/></NavLink>
+    <NavLink to='/notifications' >  <MdNotifications className='cursor-pointer' title='Notifications'/></NavLink>
+    <NavLink to='/profile' >  <MdAccountCircle className='cursor-pointer' title='Profile'/></NavLink>
       </div>
       </div>  
     </div>
