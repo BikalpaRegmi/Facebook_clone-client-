@@ -64,8 +64,8 @@ try {
 }
 }
   return (
-    <div>
-    <div className="logo flex justify-center mt-9 pb-3">
+    <div className='bg-gradient-to-b from-gray-50 to-gray-100'>
+    <div className="logo flex justify-center mt-3 pb-3">
     <Logo/>
     </div>
     <div className="box mx-auto px-3 capitalize flex justify-center flex-col mt-20 md:w-1/2 shadow-lg py-3 md:px-3 text-3xl">
@@ -79,7 +79,7 @@ try {
     </div>
     <p className='text-center mt-3'>Already have an account ?</p>
     <Link to={'/signIn'}>
-    <p className='text-3xl mx-auto my-3 border-2 w-96 text-center cursor-pointer py-1 mt-3 hover:bg-purple-950 bg-purple-900 text-white rounded-3xl mb-32' title='submit'>Login</p> <br />
+    <p className='text-xl underline mx-auto my-3 text-purple-700 w-96 text-center cursor-pointer  hover:text-purple-950  rounded-3xl mb-32' title='submit'>Login</p> <br />
     </Link>
     <ToastContainer/>
     </div>

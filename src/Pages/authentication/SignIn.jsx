@@ -50,8 +50,8 @@ const SignIn = () => {
     }
   }
   return (
-    <div className=''>
-     <div className="logo flex justify-center mt-9 pb-3">
+    <div className='bg-gradient-to-b from-gray-50 to-gray-100'>
+     <div className="logo flex justify-center mt-3 pb-3">
     <Logo/>
     </div>
 
@@ -77,7 +77,7 @@ const SignIn = () => {
 <p className='text-center mt-3'>New to Bi Book ?</p>
 
 <Link to={'/signUp'}>
-    <p className='text-3xl mx-auto my-3 border-2 w-96 text-center cursor-pointer py-1 mt-3 hover:bg-purple-950 bg-purple-900 text-white rounded-3xl mb-32' title='submit'>Create an account</p> <br />
+<p className='text-xl underline mx-auto my-3 text-purple-700 w-96 text-center cursor-pointer hover:text-purple-950  rounded-3xl mb-32' title='submit'>Create new account</p> <br />
 </Link>
 <ToastContainer/>
     </div>

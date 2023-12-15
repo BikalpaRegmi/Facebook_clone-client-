@@ -10,6 +10,7 @@ import Friends from './Pages/friends/index'
 import Notify from './Pages/Notifications/index';
 import Account from './Pages/account';
 import Message from './Pages/messages';
+import Footer from './components/footer';
 
 
 
@@ -39,7 +40,7 @@ useLayoutEffect(()=>{
         </Routes>
 
 
-
+      <Footer/>
       <MblNav/>
     </div>
   )
