@@ -1,12 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiFillPicture } from 'react-icons/ai';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from '../../../axiosConfig';
 
 const Mind = () => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [caption , setCaption] = useState('')
+  const [postData , setPostData] = useState({
+    caption : '',
+    picture : '',
+  })
 
   const handlePictureClick = () => {
     fileInputRef.current.click();
@@ -17,28 +21,73 @@ const Mind = () => {
     if (selectedFile) {
       const blobUrl = URL.createObjectURL(selectedFile);
       setSelectedFile(blobUrl);
+      setPostData({ ...postData, picture: selectedFile });
     }
   };
 
  
- const handlePost = ()=>{
-  if(!selectedFile && !caption){
-    toast.error('plz select a picture or write some text before posting')
-  }
-  else if(caption.length < 9){
-    toast.error('caption must be atleast 10 letters')
-  }
+ const handlePost = async()=>{
+
+  const data = new FormData();
+  data.append('file', postData.picture);
+  data.append('upload_preset', 'BiBook');
+  data.append('cloud_name', 'bikalpacloud');
+
+  try {
+    console.log('Sending request to Cloudinary...');
+
+    const response = await fetch('https://api.cloudinary.com/v1_1/bikalpacloud/upload', {
+      method: 'POST',
+      body: data,
+    })
+  const res = await response.json()
+
+  const axiosHeaders = {
+    headers: {
+      authorize: 'Bearer ' + localStorage.getItem('jwt'),
+      'Content-Type': 'application/json', 
+
+    },
+  };
+
+   const res2 = await axios.post('/api/post/createpost' , { ...postData , picture: res.url } , axiosHeaders );
+
+ if(res2.data.error === 'You need to log in') toast.error(`You've gotta login first !`)
+
+ else if(!selectedFile && !postData.caption) toast.error('plz select a picture or write some text before posting')
+
+
+ else {
+   toast.success('Posting...')
+  setTimeout(() => {
+    window.location.reload()
+  }, 3333);
  }
+
+
+  } catch (error) {
+  console.log(error)
+ }
+
+ 
+ }
+ const handleChange = (event)=>{
+  setPostData({...postData , [event.target.name] : event.target.value})
+ }
+ 
+ useEffect(()=>{
+ },[postData])
   return (
     <>
     <div className='bg-slate-100 md:mx-64 rounded-full'>
     <div className='bg-slate-100 mt-3 px-3 flex md:w-1/2 justify-center gap-3 md:mx-auto rounded-3xl'>
-      <div className='pro_text flex justify-center gap-3'>
-        <img src='dummyProfile.png' alt='' className='rounded-full w-14 cursor-pointer' title='profile' />
+      <div className='pro_text mt-1 flex justify-center gap-3'>
+        <img src='dummyProfile.png' alt='' className='rounded-full h-12 w-14 cursor-pointer' title='profile' />
         <input
           type='text'
-          onChange={(e)=>setCaption(e.target.value)}
-          value={caption}
+          onChange={handleChange}
+          name='caption'
+          value={postData.caption}
           className='border-2 rounded-3xl text-gray-700 w-64 placeholder:text-gray-500 px-3'
           placeholder={`Whats on your mind, Ram ?`}
         />
@@ -51,6 +100,7 @@ const Mind = () => {
           ref={fileInputRef}
           style={{ display: 'none' }}
           onChange={handleFileChange}
+          name='picture'
         />
       </div>
       </div>
@@ -58,7 +108,7 @@ const Mind = () => {
    selectedFile ?
    (<>
       <img src={selectedFile}  alt="" className='preview mt-1 md:w-96 h-64 md:h-auto mx-auto px-20'/>
-      <p className=' mx-auto text-center cursor-pointer mt-1 hover:shadow-md bg-purple-900 text-white text-xl w-16 rounded-3xl '>Post</p>
+      <p className=' mx-auto text-center cursor-pointer mt-1 hover:shadow-md bg-purple-900 text-white text-xl w-16 rounded-3xl ' onClick={handlePost}>Post</p>
   </> )
 :
   <p className=' mx-auto text-center cursor-pointer mt-1 hover:shadow-md bg-purple-900 text-white text-xl w-16 rounded-3xl disabled' onClick={handlePost}>Post</p>

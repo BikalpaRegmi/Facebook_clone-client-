@@ -72,9 +72,9 @@ try {
  <h1 className='text-center mx-auto mb-9 text-5xl mt-9 font-mono w-64 shadow-md shadow-purple-700'>SignUp</h1>
      <p className='md:flex sm:text-3xl justify-between my-3 font-bold'>  name : <input type='text' name='name' onChange={handleChange} className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/> </p>
      <p className='md:flex sm:text-3xl justify-between my-3 font-bold'>  PhoneNo : <input type='number' value={userInput.phone} name='phone' onChange={handleChange} className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/> </p>
-     <p className='md:flex sm:text-3xl justify-between my-3 font-bold'>  email : <input type='text' name='email' onChange={handleChange} className='border-2 md:w-1/2 font-light capitalize pl-1 text-xl w-10/12'/> </p>
-     <p className=' sm:text-3xl justify-between my-3 font-bold'>  password :<span className='flex gap-9'> <input type={type} name='password' onChange={handleChange} className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/> <span className='cursor-pointer' onClick={toggleEye}>{icon}</span> </span> </p>
-     <p className=' sm:text-3xl justify-between my-3 font-bold'>  confirm password : <span className='flex gap-9'><input type={type} name='conPassword' onChange={handleChange} className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/> <span className='cursor-pointer' onClick={toggleEye}>{icon}</span>  </span></p> 
+     <p className='md:flex sm:text-3xl justify-between my-3 font-bold'>  email : <input type='text' name='email' onChange={handleChange} className='border-2 md:w-1/2 font-light  pl-1 text-xl w-10/12'/> </p>
+     <p className=' sm:text-3xl justify-between my-3 font-bold'>  password :<span className='flex gap-9'> <input type={type} name='password' onChange={handleChange} className='border-2 font-light  pl-1 text-xl md:w-1/2 w-10/12'/> <span className='cursor-pointer' onClick={toggleEye}>{icon}</span> </span> </p>
+     <p className=' sm:text-3xl justify-between my-3 font-bold'>  confirm password : <span className='flex gap-9'><input type={type} name='conPassword' onChange={handleChange} className='border-2 font-light  pl-1 text-xl md:w-1/2 w-10/12'/> <span className='cursor-pointer' onClick={toggleEye}>{icon}</span>  </span></p> 
      <p className='text-3xl my-3 border-2 w-10/12 text-center cursor-pointer py-1 mt-7 hover:bg-purple-950 bg-purple-900 text-white rounded-3xl' title='submit' onClick={register}>register</p> <br />
     </div>
     <p className='text-center mt-3'>Already have an account ?</p>

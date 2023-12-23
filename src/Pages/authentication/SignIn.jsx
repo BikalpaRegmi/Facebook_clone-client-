@@ -39,9 +39,11 @@ const SignIn = () => {
       else{
        toast.success('signIn sucessful')
        setTimeout(() => {
+        console.log(res.data)
+        localStorage.setItem('jwt' , res.data)
         navigate('/')
         window.location.reload()
-        console.log('Sign-in  success');
+        console.log('Signed-in  successfully');
       }, 3000);
       }
 
@@ -50,21 +52,25 @@ const SignIn = () => {
     }
   }
   return (
+    <>
+  
     <div className='bg-gradient-to-b from-gray-50 to-gray-100'>
-     <div className="logo flex justify-center mt-3 pb-3">
+     <div className="logo flex  justify-center mt-3 pb-3">
     <Logo/>
     </div>
-
+   
     <div className="box mx-auto px-3 capitalize flex justify-center flex-col mt-20 md:w-1/2 shadow-lg py-3 md:px-3 text-3xl">
+    <h1 className='text-center normal-case text-lg font-light '>Demo@gmail.com</h1>
+    <h1 className='text-center normal-case text-lg font-light'>Demo123</h1>
     <h1 className='text-center mx-auto mb-9 text-5xl mt-9 font-mono w-64 shadow-md shadow-purple-700'>signIn</h1>
-    <p className='md:flex flex-col sm:text-3xl justify-between my-3 font-bold'>  email : <input type='text' value={userInput.email} onChange={handleChange} name='email' className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/> </p>
+    <p className='md:flex flex-col sm:text-3xl justify-between my-3 font-bold'>  email : <input type='text' value={userInput.email} onChange={handleChange} name='email' className='border-2 font-light  pl-1 text-xl md:w-1/2 w-10/12'/> </p>
     <p className='md:flex flex-col sm:text-3xl justify-between my-3 font-bold'>  password :
      {  eye ? 
-     <span className='flex gap-3'>   <input type='text' onChange={handleChange} value={userInput.password} name='password' className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/>
+     <span className='flex gap-3'>   <input type='text' onChange={handleChange} value={userInput.password} name='password' className='border-2 font-light  pl-1 text-xl md:w-1/2 w-10/12'/>
       <p onClick={handleEye}><FiEye className='cursor-pointer'/></p> 
      </span> 
      : 
-     <span className='flex gap-3'>   <input type='password' onChange={handleChange} value={userInput.password} name='password' className='border-2 font-light capitalize pl-1 text-xl md:w-1/2 w-10/12'/>
+     <span className='flex gap-3'>   <input type='password' onChange={handleChange} value={userInput.password} name='password' className='border-2 font-light  pl-1 text-xl md:w-1/2 w-10/12'/>
       <p onClick={handleEye}><FiEyeOff className='cursor-pointer'/></p> 
      </span> 
      }
@@ -81,6 +87,7 @@ const SignIn = () => {
 </Link>
 <ToastContainer/>
     </div>
+    </>
   )
 }
 

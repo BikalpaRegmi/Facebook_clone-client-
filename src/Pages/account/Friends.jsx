@@ -8,19 +8,19 @@ const Friends = () => {
      <div className="friends grid my-7 grid-cols-2 md:grid-cols-4 md:ml-9 mx-1">
 
         <div className="container flex gap-3">
-        <img src="dummyProfile.png" alt=""  className='w-14 rounded-full'/>
+        <img src="dummyProfile.png" alt=""  className='w-14 h-14 mt-1 rounded-full'/>
         <p className='self-center  md:text-lg'> Bikalpa Regmi</p>
         </div>
         <div className="container flex gap-3">
-        <img src="dummyProfile.png" alt=""  className='w-14 rounded-full'/>
+        <img src="dummyProfile.png" alt=""  className='w-14 h-14 mt-1 rounded-full'/>
         <p className='self-center  md:text-lg'> Bikalpa Regmi</p>
         </div>
         <div className="container flex gap-3">
-        <img src="dummyProfile.png" alt=""  className='w-14 rounded-full'/>
+        <img src="dummyProfile.png" alt=""  className='w-14 h-14 mt-1 rounded-full'/>
         <p className='self-center  md:text-lg'> Bikalpa Regmi</p>
         </div>
         <div className="container flex gap-3">
-        <img src="dummyProfile.png" alt=""  className='w-14 rounded-full'/>
+        <img src="dummyProfile.png" alt=""  className='w-14 h-14 mt-1 rounded-full'/>
         <p className='self-center  md:text-lg'> Bikalpa Regmi</p>
         </div>
 

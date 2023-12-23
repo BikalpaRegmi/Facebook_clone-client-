@@ -13,7 +13,7 @@ const Posts = () => {
 
 <span className="profile flex gap-3 ">
 
-  <img src="dummyProfile.png" alt="" className='rounded-full w-12 cursor-pointer' title='profile'/>
+  <img src="dummyProfile.png" alt="" className='rounded-full h-12 w-12 cursor-pointer' title='profile'/>
   <p className='flex flex-col'>Bikki Chikki Dhikki <i className='text-sm font-light'>3 days ago</i></p>
 </span>
 
@@ -26,7 +26,7 @@ const Posts = () => {
 <div className="image mt-5 md:px-9">
 <p className='mb-1'>Hii i just clicked a picture cuz i was feeling boring</p>
 
-<img src="dummyPostImg.png" alt="" className='mx-auto h-56 md:h-96 w-full'/>
+<img src="dummyPostImg.png" alt="" className='mx-auto h-56 sm:h-96 md:h-96 w-full'/>
 </div>
 
 <div className="bottom flex border-t-2 justify-between text-3xl md:px-14 px-3 mt-3">
