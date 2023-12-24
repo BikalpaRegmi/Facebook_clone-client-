@@ -40,7 +40,8 @@ const SignIn = () => {
        toast.success('signIn sucessful')
        setTimeout(() => {
         console.log(res.data)
-        localStorage.setItem('jwt' , res.data)
+        localStorage.setItem('jwt' , res.data.token)
+        localStorage.setItem('user' , JSON.stringify(res.data.userExists))
         navigate('/')
         window.location.reload()
         console.log('Signed-in  successfully');

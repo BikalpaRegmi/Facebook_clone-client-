@@ -13,7 +13,7 @@ const ProfileDetails = () => {
         </div>
 
         <div className="totalFriends_name mt-3 my-auto">
-        <p  className='text-5xl text-center'> Bikalpa Regmi</p>
+        <p  className='text-5xl text-center capitalize'> {JSON.parse(localStorage.getItem('user')).name}</p>
          <i className=' mx-16 text-center'>99 friends</i>
          </div>
 

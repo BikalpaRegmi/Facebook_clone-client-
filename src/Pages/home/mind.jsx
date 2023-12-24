@@ -40,13 +40,11 @@ const Mind = () => {
       method: 'POST',
       body: data,
     })
-  const res = await response.json()
+  const res = await response.json() 
 
   const axiosHeaders = {
     headers: {
       authorize: 'Bearer ' + localStorage.getItem('jwt'),
-      'Content-Type': 'application/json', 
-
     },
   };
 
@@ -89,7 +87,7 @@ const Mind = () => {
           name='caption'
           value={postData.caption}
           className='border-2 rounded-3xl text-gray-700 w-64 placeholder:text-gray-500 px-3'
-          placeholder={`Whats on your mind, Ram ?`}
+          placeholder={`Whats on your mind, ${JSON.parse(localStorage.getItem('user')).name} ?`}
         />
       </div>
 
