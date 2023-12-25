@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsThreeDots } from "react-icons/bs";
-import { BiLike } from "react-icons/bi";
-import { FaRegComment,FaShare } from "react-icons/fa6";
+import {  BiLike } from "react-icons/bi";
+import {  FaRegComment,FaShare } from "react-icons/fa6";
 import axios from '../../../axiosConfig'
 import { AiOutlineLoading } from "react-icons/ai";
 
@@ -10,6 +10,8 @@ const Post = () => {
  const [posts , setPosts] = useState([]) ;
  const [loading , setLoading] = useState(true)
  const [postUpdateTrigger , setPostUpdateTrigger] = useState(false)
+ const [openCommentsPostId, setOpenCommentsPostId] = useState(null); 
+ const [comment , setComment] = useState('')
 
  const getallpost = async() =>{
  try {
@@ -54,7 +56,19 @@ const unLikePost = async(id)=>{
     console.log(error)
   }
 }
+ const handleCmntOpen = (postId) =>{
+  setOpenCommentsPostId((prevId) => (prevId === postId ? null : postId));
+ }
 
+ const makeComment = async(id , cmt) =>{
+   await axios.patch('/api/post/comment' , {postId : id , comment : cmt} , {
+    headers: {
+      authorize: 'Bearer ' + localStorage.getItem('jwt')
+    }
+  }) ;
+  setPostUpdateTrigger(!postUpdateTrigger);
+  setComment('')
+}
   return (
     <>
     {
@@ -99,12 +113,55 @@ const unLikePost = async(id)=>{
            (
             <div className='flex flex-col'>
         <span className="like flex text-lg gap-1 cursor-pointer hover:text-purple-900" onClick={()=>likedPost(post._id)}><BiLike className='mt-1 text-black text-3xl cursor-pointer' title='like'/>({post.likes.length}) </span>
-        </div>
-           )
-        }
-     <span className="comment flex text-lg gap-1 hover:text-purple-900"><FaRegComment className='mt-1 text-3xl cursor-pointer' title='comments'/>(9)</span>
+       
+    
+    </div>
+  )
+}
+    
+  
+
+        <span className="comment flex text-lg gap-1 hover:text-purple-900"><FaRegComment onClick={()=>handleCmntOpen(post._id)} className='mt-1 text-3xl cursor-pointer' title='comments'/>
+     <p className='flex flex-col'> <i>({post.comments.length})</i></p>
+     </span>
+
      <span className="share flex text-lg gap-1 hover:text-purple-900"><FaShare className='mt-1 text-3xl cursor-pointer' title='share'/>(7)</span>
         </div>
+     {
+      openCommentsPostId === post._id ?
+      (
+        <>
+     
+     <div className='overflow-scroll h-48'>
+
+{
+  [...post.comments].reverse().map((cmt)=>{
+return (  <div className='flex gap-3 bg-purple-100 my-3 border-b-2' key={cmt._id}>
+        <img src="dummyProfile.png" className='w-12 h-12 rounded-full' alt="" />
+        {cmt.postedBy && cmt.postedBy.name ? (
+    <p className=' font-light text-black flex-col flex'>
+      <b className='capitalize'>{cmt.postedBy.name}</b>
+      {cmt.comment}
+    </p>
+  ) : (
+    <p className=' font-light text-black flex-col flex'>
+      <b className='capitalize'>Unknown User</b>
+      {cmt.comment}
+    </p>
+  )}       </div>
+   ) })
+}
+       
+       </div>
+
+       <div className='w-full bg-purple-900 mt-1 rounded-xl'>
+       <input type="text" value={comment} onChange={(e)=>setComment(e.target.value)} className="md:w-10/12 sm:w-10/12 h-9  rounded-md bg-gray-100 pl-3" placeholder='write a comment'/>
+       <button className='text-white ml-3 font-bold' onClick={()=>makeComment(post._id , comment )}>Comment</button>
+        </div>
+        </>
+      )
+      : ''
+     }
       </div>
     </div>
   )

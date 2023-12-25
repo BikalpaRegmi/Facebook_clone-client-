@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 const Navigations = () => {
   return (
     <div>
-      <div className="pc hidden md:block text-3xl mx-auto mt-2 text-purple-700">
+      <div className="pc hidden  md:block text-3xl mx-auto mt-2 text-purple-700">
       <div className="navs flex gap-10 ">
       <NavLink to='/friends' > <FaUserFriends className='cursor-pointer' title='Friends'/> </NavLink>
       <NavLink to='/notifications' > <MdNotifications className='cursor-pointer' title='Notifications'/> </NavLink>
