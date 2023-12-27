@@ -11,7 +11,7 @@ const MblNav = () => {
     <NavLink to='/' >  <FaHome className='cursor-pointer'/> </NavLink> 
     <NavLink to='/friends' >  <FaUserFriends className='cursor-pointer' title='Friends'/></NavLink>
     <NavLink to='/notifications' >  <MdNotifications className='cursor-pointer' title='Notifications'/></NavLink>
-    <NavLink to='/profile' >  <MdAccountCircle className='cursor-pointer' title='Profile'/></NavLink>
+    <NavLink to='/myprofile' >  <MdAccountCircle className='cursor-pointer' title='Profile'/></NavLink>
       </div>
       </div>  
     </div>

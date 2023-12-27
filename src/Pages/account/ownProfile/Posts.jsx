@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { BiLike } from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
 import { FaRegComment, FaShare } from 'react-icons/fa6'
-import axios from '../../../axiosConfig'
+import axios from '../../../../axiosConfig'
+import { CiCircleRemove } from "react-icons/ci";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Posts = ({myPosts , getMyPosts}) => {
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const [openCommentsPostId, setOpenCommentsPostId] = useState(null); 
   const [comment , setComment] = useState('')
+  const [toggleDotsId , setToggleDotsId] = useState(null)
 
   const imgClick = (img)=>{
         window.open(img, '_blank');
@@ -17,6 +21,9 @@ const Posts = ({myPosts , getMyPosts}) => {
   setOpenCommentsPostId((prevId) => (prevId === postId ? null : postId));
  }
 
+ const handleDots = (id) =>{
+ setToggleDotsId((prevId) => (prevId != id ? id : null))
+}
  const makeComment = async(id , cmt) =>{
    await axios.patch('/api/post/comment' , {postId : id , comment : cmt} , {
     headers: {
@@ -31,6 +38,16 @@ const Posts = ({myPosts , getMyPosts}) => {
    getMyPosts() ;
   },[updateTrigger])
 
+
+  const handleDelete = async(id) =>{
+  try {
+    await axios.delete(`/api/post/deletePost/${id}`) ;
+    setUpdateTrigger(!updateTrigger);
+    toast.warn('post deleted successfully')
+  } catch (error) {
+    console.log(error)
+  }
+  }
   const likedPost = async (id) => {
     try {
       await axios.patch('/api/post/likes', { postId:id }, {
@@ -74,8 +91,21 @@ const Posts = ({myPosts , getMyPosts}) => {
           <p className='flex flex-col capitalize'> You <i className='text-sm font-light'>3 days ago</i></p>
         </span>
 
-        <span className="menu mt-3 ">
-      <BsThreeDots className='text-xl cursor-pointer hover:text-purple-700' title='menu'/>
+        <span className="menu mt-1 relative px-4">
+        {
+          toggleDotsId === post._id ?(
+<>
+      <CiCircleRemove className='text-3xl cursor-pointer  hover:text-purple-700 '  onClick={()=>handleDots(post._id)}/>
+      <button className='font-bold bg-red-700 absolute right-0.5 w-40 text-white px-7 rounded-full' onClick={()=>handleDelete(post._id)}>Delete post</button>
+</>
+
+          )
+          :
+          (
+           <BsThreeDots className='text-2xl cursor-pointer  hover:text-purple-700' title='menu' onClick={()=>handleDots(post._id)}/>
+          )
+        }
+
         </span>
 
         </div>
@@ -144,6 +174,7 @@ return (  <div className='flex gap-3 bg-purple-100 my-3 border-b-2' key={cmt._id
   )
       })
     }
+    <ToastContainer/>
     </div>
   )
 }

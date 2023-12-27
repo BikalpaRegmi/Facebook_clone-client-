@@ -1,17 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BsThreeDots } from "react-icons/bs";
 import {  BiLike } from "react-icons/bi";
 import {  FaRegComment,FaShare } from "react-icons/fa6";
 import axios from '../../../axiosConfig'
 import { AiOutlineLoading } from "react-icons/ai";
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CiCircleRemove } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
 
 const Post = () => {
+  
  const [posts , setPosts] = useState([]) ;
  const [loading , setLoading] = useState(true)
  const [postUpdateTrigger , setPostUpdateTrigger] = useState(false)
  const [openCommentsPostId, setOpenCommentsPostId] = useState(null); 
- const [comment , setComment] = useState('')
+ const [comment , setComment] = useState('') ;
+ const [toggleDotsId , setToggleDotsId] = useState(null)
+
+ const handleDots = (id) =>{
+  setToggleDotsId((prevId) => (prevId != id ? id : null))
+ }
+
+ const handleDelete = async(id) =>{
+  try {
+    await axios.delete(`/api/post/deletePost/${id}`) ;
+    setPostUpdateTrigger(!postUpdateTrigger)
+    toast.warn('post deleted successfully')
+  } catch (error) {
+    console.log(error)
+  }
+  }
 
  const getallpost = async() =>{
  try {
@@ -69,6 +88,16 @@ const unLikePost = async(id)=>{
   setPostUpdateTrigger(!postUpdateTrigger);
   setComment('')
 }
+
+const handleProfile = async(id) =>{
+  try {
+    const res = await axios.get(`/api/profile/user/${id}`)
+    console.log(res.data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
   return (
     <>
     {
@@ -83,13 +112,31 @@ const unLikePost = async(id)=>{
 
         <div className="head flex justify-between pt-1 ">
 
-        <span className="profile flex gap-3 ">
-          <img src="dummyProfile.png" alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile'/>
-          <p className='flex flex-col capitalize'>{post.postedBy.name} <i className='text-sm font-light'>3 days ago</i></p>
-        </span>
+       <Link to={`/profile/${post.postedBy._id}`}>
 
-        <span className="menu mt-3 ">
-      <BsThreeDots className='text-xl cursor-pointer hover:text-purple-700' title='menu'/>
+       <span className="profile flex gap-3 " onClick={()=>handleProfile(post.postedBy._id)}>
+          <img src="dummyProfile.png" alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile' />
+          <p className='flex flex-col capitalize'>{post.postedBy.name} <i className='text-sm font-light'>{ new Date(post.createdAt).toLocaleString()}</i></p>
+        </span>
+       </Link> 
+
+        <span className="menu mt-3 relative">
+        {
+    (post.postedBy._id === JSON.parse(localStorage.getItem('user'))._id && toggleDotsId === post._id) ||
+    (post.postedBy._id !== JSON.parse(localStorage.getItem('user'))._id && toggleDotsId === post._id) ? (
+      <CiCircleRemove className='text-3xl cursor-pointer  hover:text-purple-700 '  onClick={()=>handleDots(post._id)}/>
+    ) : (
+      <BsThreeDots className='text-2xl cursor-pointer  hover:text-purple-700' title='menu' onClick={()=>handleDots(post._id)}/>
+    )
+  }
+  
+  {
+    post.postedBy._id === JSON.parse(localStorage.getItem('user'))._id && toggleDotsId === post._id ? (
+      <button className='font-bold bg-red-700 absolute right-0.5 w-40 text-white px-7 rounded-full' onClick={()=>handleDelete(post._id)}>Delete post</button>
+    ) : post.postedBy._id !== JSON.parse(localStorage.getItem('user'))._id && toggleDotsId === post._id ? (
+      <button className='font-bold bg-red-700 absolute right-0.5 w-40 text-white px-7 rounded-full'>Report</button>
+    ) : null
+  }
         </span>
 
         </div>
@@ -167,6 +214,7 @@ return (  <div className='flex gap-3 bg-purple-100 my-3 border-b-2' key={cmt._id
   )
     })
     }
+    <ToastContainer/>
     </>
   )
 

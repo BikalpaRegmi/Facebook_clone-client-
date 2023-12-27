@@ -14,14 +14,14 @@ const ProfileDetails = () => {
 
         <div className="totalFriends_name mt-3 my-auto">
         <p  className='text-5xl text-center capitalize'> {JSON.parse(localStorage.getItem('user')).name}</p>
-         <i className=' mx-16 text-center'>99 friends</i>
+         <i className=' mx-16 text-center'>99 followers</i>
          </div>
 
         
 
         <div className="buttons flex justify-center md:my-auto mt-9 gap-1 mx-1">
            <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full'><FiEdit3 className='text-2xl mt-1'/> <b>Edit profile</b></button>
-           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full'><MdPeopleAlt className='text-2xl mt-1'/> <b>Peoples you may know</b></button>
+           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full'><MdPeopleAlt className='text-2xl mt-1'/> <b>My Followings</b></button>
         </div>
       </div>
     </div>

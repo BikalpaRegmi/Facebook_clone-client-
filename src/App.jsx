@@ -8,9 +8,10 @@ import SignIn from './Pages/authentication/SignIn'
 import SignUp from './Pages/authentication/SignUp'
 import Friends from './Pages/friends/index'
 import Notify from './Pages/Notifications/index';
-import Account from './Pages/account';
+import Account from './Pages/account/ownProfile';
 import Message from './Pages/messages';
 import Footer from './components/footer';
+import OtherPro from './Pages/account/otherProfile';
 
 
 
@@ -34,8 +35,9 @@ useLayoutEffect(()=>{
      <Route path='/signUp' Component={SignUp}/>
      <Route path='/friends' Component={Friends}/>
      <Route path='/notifications' Component={Notify}/>
-     <Route path='/profile' Component={Account}/>
+     <Route path='/myprofile' Component={Account}/>
      <Route path='/msg' Component={Message}/>
+     <Route path='/profile/:id' Component={OtherPro}/>
      
         </Routes>
 

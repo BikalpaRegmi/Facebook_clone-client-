@@ -3,8 +3,8 @@ import ProfileDetails from './profileDetails'
 import Photos from './photos'
 import Posts from './Posts'
 import Friends from './Friends'
-import SignIn from '../authentication/SignIn'
-import axios from '../../../axiosConfig'
+import SignIn from '../../authentication/SignIn'
+import axios from '../../../../axiosConfig'
 const Account = () => {
   
   const token = localStorage.getItem('jwt');
@@ -38,7 +38,7 @@ const Account = () => {
       <nav className='mt-7 border-t-4 border-b-4'>
         <ul className='flex justify-around'>
           <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(true)}>Posts</li>
-          <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(false)}>Friends</li>
+          <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(false)}>Followers</li>
           <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(false)}>Photos</li>
         </ul>
       </nav>

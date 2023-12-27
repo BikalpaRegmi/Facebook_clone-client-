@@ -35,7 +35,7 @@ const Mind = () => {
 
   try {
     console.log('Sending request to Cloudinary...');
-
+    toast.success('Posting...')
     const response = await fetch('https://api.cloudinary.com/v1_1/bikalpacloud/upload', {
       method: 'POST',
       body: data,
@@ -48,19 +48,24 @@ const Mind = () => {
     },
   };
 
-   const res2 = await axios.post('/api/post/createpost' , { ...postData , picture: res.url } , axiosHeaders );
+  if(!selectedFile && postData.caption ==='') {
+    toast.error('plz select a picture or write some text before posting')
+  }
+ else{
+  const res2 = await axios.post('/api/post/createpost' , { ...postData , picture: res.url } , axiosHeaders );
+  if(res2.data.error === 'You need to log in') toast.error(`You've gotta login first !`)
+ 
+  else {
+   
+   setTimeout(() => {
+     window.location.reload()
+   }, 3333);
+  }
 
- if(res2.data.error === 'You need to log in') toast.error(`You've gotta login first !`)
-
- else if(!selectedFile && !postData.caption) toast.error('plz select a picture or write some text before posting')
-
-
- else {
-   toast.success('Posting...')
-  setTimeout(() => {
-    window.location.reload()
-  }, 3333);
  }
+   
+
+
 
 
   } catch (error) {
@@ -86,7 +91,7 @@ const Mind = () => {
           onChange={handleChange}
           name='caption'
           value={postData.caption}
-          className='border-2 rounded-3xl text-gray-700 w-64 placeholder:text-gray-500 px-3'
+          className='border-2 rounded-3xl text-gray-700 text-sm w-64 placeholder:text-gray-500 px-3'
           placeholder={`Whats on your mind, ${JSON.parse(localStorage.getItem('user')).name} ?`}
         />
       </div>
@@ -105,7 +110,7 @@ const Mind = () => {
       {
    selectedFile ?
    (<>
-      <img src={selectedFile}  alt="" className='preview mt-1 md:w-96 h-64 md:h-auto mx-auto px-20'/>
+      <img src={selectedFile}  alt="" className='preview mt-1 md:w-96 md:h-auto mx-auto px-20'/>
       <p className=' mx-auto text-center cursor-pointer mt-1 hover:shadow-md bg-purple-900 text-white text-xl w-16 rounded-3xl ' onClick={handlePost}>Post</p>
   </> )
 :
