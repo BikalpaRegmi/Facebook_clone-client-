@@ -9,13 +9,13 @@ import { useParams } from 'react-router-dom'
 const Account = () => {
   
   const token = localStorage.getItem('jwt');
-
+ const {id} = useParams()
   const [myPosts , setMyPosts] = useState([])
   const [showPosts, setShowPosts] = useState(true) ;
+  const [showFriends, setShowFriends] = useState(false);
 
   const getMyPosts = async() =>{
     try {
-    
      const res = await axios.get(`/api/post/getallpost` ) ;
     setMyPosts(res.data.reverse())
     } catch (error) {
@@ -30,21 +30,21 @@ const Account = () => {
 
   : <>
 
-      <ProfileDetails/>
+      <ProfileDetails setShowPosts={setShowPosts}  setShowFriends = {setShowFriends} />
 
       <nav className='mt-7 border-t-4 border-b-4'>
         <ul className='flex justify-around'>
-          <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(true)}>Posts</li>
-          <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(false)}>Followers</li>
-          <li className='cursor-pointer text-lg active:underline' onClick={()=>setShowPosts(false)}>Photos</li>
+          <li className='cursor-pointer text-lg active:underline' onClick={()=>{setShowPosts(true) ; setShowFriends(false)}}>Posts ({myPosts.filter((post)=>post.postedBy._id === id).length})</li>
+          <li className='cursor-pointer text-lg active:underline' onClick={()=>{setShowPosts(false) ; setShowFriends(false)}}>Photos ({myPosts.filter((post)=>post.postedBy._id === id).length})</li>
         </ul>
       </nav>
 
 {
-  showPosts ?  <Posts myPosts={myPosts} getMyPosts={getMyPosts}/> :   <Friends/>
+  showPosts && !showFriends ?  <Posts myPosts={myPosts} getMyPosts={getMyPosts}/> : !showFriends && !showPosts ?<Photos myPosts={myPosts} getMyPosts={getMyPosts}/>   : <Friends />
 }
-  
-<Photos myPosts={myPosts} getMyPosts={getMyPosts}/>
+
+ 
+
   
   
   

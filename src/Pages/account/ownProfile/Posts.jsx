@@ -87,8 +87,8 @@ const Posts = ({myPosts , getMyPosts}) => {
         <div className="head flex justify-between pt-1 ">
 
         <span className="profile flex gap-3 ">
-          <img src="dummyProfile.png" alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile'/>
-          <p className='flex flex-col capitalize'> You <i className='text-sm font-light'>3 days ago</i></p>
+          <img src={post.postedBy.photo} alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile'/>
+          <p className='flex flex-col capitalize'> You <i className='text-sm font-light'>{new Date(post.createdAt).toLocaleString()}</i></p>
         </span>
 
         <span className="menu mt-1 relative px-4">
@@ -145,7 +145,7 @@ const Posts = ({myPosts , getMyPosts}) => {
 {
   [...post.comments].reverse().map((cmt)=>{
 return (  <div className='flex gap-3 bg-purple-100 my-3 border-b-2' key={cmt._id}>
-        <img src="dummyProfile.png" className='w-12 h-12 rounded-full' alt="" />
+        <img src={cmt.postedBy?.photo} className='w-12 h-12 rounded-full' alt="" />
         {cmt.postedBy && cmt.postedBy.name ? (
     <p className=' font-light text-black flex-col flex'>
       <b className='capitalize'>{cmt.postedBy.name}</b>

@@ -7,11 +7,23 @@ import axios from '../../../axiosConfig';
 const Mind = () => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [pp , setPP] = useState({})
   const [postData , setPostData] = useState({
     caption : '',
     picture : '',
   })
 
+  const getMyData = async()=>{
+    try {
+     const res = await axios.get(`/api/profile/user/${JSON.parse(localStorage.getItem('user'))._id}`)
+     setPP(res.data) ;
+    } catch (error) {
+     console.log(error)
+    }
+   }
+ useEffect(()=>{
+getMyData();
+ },[])
   const handlePictureClick = () => {
     fileInputRef.current.click();
   };
@@ -40,7 +52,7 @@ const Mind = () => {
       method: 'POST',
       body: data,
     })
-  const res = await response.json() 
+  const res = await response.json() ;
 
   const axiosHeaders = {
     headers: {
@@ -63,11 +75,6 @@ const Mind = () => {
   }
 
  }
-   
-
-
-
-
   } catch (error) {
   console.log(error)
  }
@@ -78,14 +85,13 @@ const Mind = () => {
   setPostData({...postData , [event.target.name] : event.target.value})
  }
  
- useEffect(()=>{
- },[postData])
+ 
   return (
     <>
     <div className='bg-slate-100 md:mx-64 rounded-full'>
     <div className='bg-slate-100 mt-3 px-3 flex md:w-1/2 justify-center gap-3 md:mx-auto rounded-3xl'>
       <div className='pro_text mt-1 flex justify-center gap-3'>
-        <img src='dummyProfile.png' alt='' className='rounded-full h-12 w-14 cursor-pointer' title='profile' />
+        <img src={pp.photo} alt='' className='rounded-full h-12 w-14 cursor-pointer' title='profile' />
         <input
           type='text'
           onChange={handleChange}

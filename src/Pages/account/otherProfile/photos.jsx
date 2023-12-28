@@ -12,7 +12,7 @@ const {id} = useParams()
     window.open(img, '_blank');
   }  
   return (
-    <>
+    <> 
     <h1 className='text-5xl ml-5 md:text-center font-serif text-purple-800'> Photos </h1>
     <div className='m-7 gap-3 grid grid-cols-2 md:grid-cols-3 '>
 

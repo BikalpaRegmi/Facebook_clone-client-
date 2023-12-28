@@ -21,7 +21,7 @@ const Post = () => {
  const handleDots = (id) =>{
   setToggleDotsId((prevId) => (prevId != id ? id : null))
  }
-
+ 
  const handleDelete = async(id) =>{
   try {
     await axios.delete(`/api/post/deletePost/${id}`) ;
@@ -89,14 +89,7 @@ const unLikePost = async(id)=>{
   setComment('')
 }
 
-const handleProfile = async(id) =>{
-  try {
-    const res = await axios.get(`/api/profile/user/${id}`)
-    console.log(res.data)
-  } catch (error) {
-    console.log(error)
-  }
-}
+
 
   return (
     <>
@@ -112,13 +105,26 @@ const handleProfile = async(id) =>{
 
         <div className="head flex justify-between pt-1 ">
 
-       <Link to={`/profile/${post.postedBy._id}`}>
-
-       <span className="profile flex gap-3 " onClick={()=>handleProfile(post.postedBy._id)}>
-          <img src="dummyProfile.png" alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile' />
+{
+  JSON.parse(localStorage.getItem('user'))._id === post.postedBy._id ? (<>
+    <Link to={`/myProfile`}>
+       <span className="profile flex gap-3 " >
+          <img src={post.postedBy.photo} alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile' />
           <p className='flex flex-col capitalize'>{post.postedBy.name} <i className='text-sm font-light'>{ new Date(post.createdAt).toLocaleString()}</i></p>
         </span>
-       </Link> 
+       </Link>
+  </>)
+  
+  : (<>
+    <Link to={`/profile/${post.postedBy._id}`}>
+       <span className="profile flex gap-3 " >
+          <img src={post.postedBy.photo} alt="" className='rounded-full w-12 h-12 cursor-pointer' title='profile' />
+          <p className='flex flex-col capitalize'>{post.postedBy.name} <i className='text-sm font-light'>{ new Date(post.createdAt).toLocaleString()}</i></p>
+        </span>
+       </Link>
+  </>)
+}
+     
 
         <span className="menu mt-3 relative">
         {
@@ -184,7 +190,9 @@ const handleProfile = async(id) =>{
 {
   [...post.comments].reverse().map((cmt)=>{
 return (  <div className='flex gap-3 bg-purple-100 my-3 border-b-2' key={cmt._id}>
-        <img src="dummyProfile.png" className='w-12 h-12 rounded-full' alt="" />
+<Link to={`/profile/${cmt.postedBy._id}`}>
+        <img src={cmt.postedBy.photo} className='w-12 h-12 rounded-full' alt="" />
+</Link>
         {cmt.postedBy && cmt.postedBy.name ? (
     <p className=' font-light text-black flex-col flex'>
       <b className='capitalize'>{cmt.postedBy.name}</b>
