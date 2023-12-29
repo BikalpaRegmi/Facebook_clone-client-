@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Friends = () => {
   const [userDetail , setUserDetail] = useState({}) ;
  const navigate = useNavigate() ;
+ 
   const getMyData = async() =>{
      try {
       const res =await axios.get(`/api/profile/followers/${JSON.parse(localStorage.getItem('user'))._id}`) ;

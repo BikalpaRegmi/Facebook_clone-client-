@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProfileDetails = ({setShowFriends,setShowPosts}) => {
   const {id} = useParams() ;
- const [userDetail , setUserDetail] = useState({});
+ const [userDetail , setUserDetail] = useState({}) ;
  const [followerAlready , setFollowerAlready] = useState(false) ;
 
   const getUser = async() =>{

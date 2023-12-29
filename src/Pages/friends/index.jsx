@@ -1,9 +1,13 @@
 import React from 'react'
+import FollowBack from './FollowBack'
+import Recommended from './Recommended'
 
 const Friends = () => {
+  
   return (
     <div>
-      frnd
+      <FollowBack/>
+      <Recommended/>
     </div>
   )
 }
