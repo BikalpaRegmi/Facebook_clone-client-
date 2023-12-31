@@ -50,7 +50,9 @@ getMyData() ;
     return (
     <div>
     <p className='text-2xl drop-shadow-lg text-purple-700 font-bold text-center my-3'>Followers that you might wanna followBack</p>
-      <div className="main gap-3 grid sm:grid-cols-2  grid-cols-1 mx-3 md:grid-cols-3">
+        <div className="main gap-3 grid sm:grid-cols-2  grid-cols-1 mx-3 md:grid-cols-3">
+        
+
 
 {
     filteredFollowers.map((followers)=>{

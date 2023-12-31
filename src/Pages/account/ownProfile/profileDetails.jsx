@@ -3,14 +3,16 @@ import { FiEdit3 } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
 import { MdPeopleAlt } from "react-icons/md";
 import axios from '../../../../axiosConfig' ;
-import { useNavigate } from 'react-router-dom';
 
 const ProfileDetails = ({setShowPosts}) => {
   const fileInputRef = useRef(null) ;
+  const nameInputRef = useRef(null) ;
   const [selectedFile , setSelectedFile] = useState(null)
- const [image , setImage] = useState('')
- const [myDetail , setMyDetail] = useState({}) ;
-
+  const [image , setImage] = useState('') ;
+  const [update , setUpdate] = useState(false) ;
+  const [myDetail , setMyDetail] = useState({}) ;
+  const [inputName , setInputName] = useState();
+  
 const handlePictureClick = () =>{
 fileInputRef.current.click() ;
 }
@@ -31,6 +33,35 @@ getMyData() ;
 const handleMyFollowings = () =>{
  setShowPosts(false)
 }
+
+const handleName = () =>{
+ if(update) setUpdate(false)
+ else {
+setUpdate(true) ; 
+}
+}
+
+const changeName = async() =>{
+try {
+  await axios.patch('/api/profile/updateMe' , {name:inputName} , {
+    headers: {
+      authorize: 'Bearer ' + localStorage.getItem('jwt')
+    }} ) ;
+  setUpdate(false) ;
+  window.alert('Sucessfully changed ur name')
+} catch (error) {
+  console.log(error)
+}
+}
+
+useEffect(() => {
+  if (update && nameInputRef.current) {
+    nameInputRef.current.focus();
+  }
+  getMyData() ;
+}, [update]);
+
+
 const handleFileChange = (e) =>{ 
   const selectedFile = e.target.files[0];
   if (selectedFile) {
@@ -82,17 +113,33 @@ const handlePP = async() =>{
 
         : ''
        }
-        <div className="totalFriends_name mt-3 my-auto">
-        <p  className='text-5xl text-center capitalize'> {JSON.parse(localStorage.getItem('user')).name}</p>
+
+       {
+       !update ? ( <>
+          <div className="totalFriends_name mt-3 my-auto">
+        <p  className='text-5xl text-center capitalize'> {myDetail.name} </p>
         <p className='text-center text-purple-900 font-semibold'>{myDetail.followers?.length} Followers</p>
          </div> 
 
-        
-
         <div className="buttons flex justify-center md:my-auto mt-9 gap-1 mx-1">
-           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full'><FiEdit3 className='text-2xl mt-1'/> <b>Edit profile</b></button>
+           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full' onClick={handleName}><FiEdit3 className='text-2xl mt-1'/> <b>Change Name</b></button>
            <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full' onClick={handleMyFollowings}><MdPeopleAlt className='text-2xl mt-1' /> <b>My Followings</b></button>
         </div>
+        </>
+        ) : (
+          <>
+          <div className="totalFriends_name mt-3 my-auto">
+       <p className='text-4xl text-center capitalize '> <input type = 'text' ref={nameInputRef} onChange={(e)=>setInputName(e.target.value)} className=' bg-purple-100'   value={inputName} placeholder={myDetail.name}/>  </p>
+        <p className='text-center text-purple-900 font-semibold'>{myDetail.followers?.length} Followers</p>
+         </div> 
+        <div className="buttons flex justify-center md:my-auto mt-9 gap-1 mx-1">
+           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full' onClick={changeName}><FiEdit3 className='text-2xl mt-1'/> <b>Change Name</b></button>
+           <button className='flex bg-purple-900 py-3 px-5  text-white gap-1  rounded-full' onClick={handleMyFollowings}><MdPeopleAlt className='text-2xl mt-1' /> <b>My Followings</b></button>
+        </div>
+          </>
+        )
+       }
+       
       </div>
     </div>
   )
